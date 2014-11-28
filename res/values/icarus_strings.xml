@@ -156,4 +156,8 @@
     <!-- Quick settings disable on lockscreen -->
     <string name="block_on_secure_keyguard_title">Disable quick settings</string>
     <string name="block_on_secure_keyguard_summary">On secure lockscreen</string>
+
+    <!-- IME switcher button in the navbar -->
+    <string name="ime_switcher_title">IME switcher</string>
+    <string name="ime_switcher_summary">Display the input method button in the navigation bar</string>
 </resources>
