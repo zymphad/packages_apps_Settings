@@ -124,4 +124,7 @@
     <string name="clock_date_style_lowercase">Lowercase</string>
     <string name="clock_date_style_uppercase">Uppercase</string>
     <string name="clock_date_format_custom">Custom java format</string> 
+    
+    <!--  BitSyko Layers header name -->
+<string name="bitsyko_layers">Layers</string>
 </resources>
