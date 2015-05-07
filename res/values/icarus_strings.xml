@@ -71,4 +71,10 @@
     
     <!-- SuperSU header name - the app hides itself from launcher based on this resource name being present in com.android.settings -->
     <string name="supersu_title">SuperSU</string>
-    </resources>
+    
+    <!-- Sound & notification > Notification section: Title for the charging battery light option. [CHAR LIMIT=30] -->
+    <string name="charging_led_title">Charging battery light</string>
+    
+    <!-- Sound & notification > Notification section: Summary for the charging battery light kernel support. [CHAR LIMIT=30] -->
+    <string name="charging_led_support_info">3rd party kernel with the \"led always on\" patch is required.</string>    
+</resources>
