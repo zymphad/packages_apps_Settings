@@ -1,5 +1,5 @@
 
-package com.android.settings.rastapop;
+package com.android.settings.icarus;
 
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -33,7 +33,7 @@ public class StatusBarSettings extends SettingsPreferenceFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.ras_status_bar_settings);
+        addPreferencesFromResource(R.xml.icarus_status_bar_settings);
 
         // status bar brightness control
         mStatusBarBrightnessControl = (SwitchPreference) findPreference(STATUS_BAR_BRIGHTNESS_CONTROL);

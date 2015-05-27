@@ -1,5 +1,5 @@
 
-package com.android.settings.rastapop;
+package com.android.settings.icarus;
 
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -36,7 +36,7 @@ public class VolumeRockerSettings extends SettingsPreferenceFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.ras_volume_rocker_settings);
+        addPreferencesFromResource(R.xml.icarus_volume_rocker_settings);
 
         // volume rocker wake
         mVolumeRockerWake = (SwitchPreference) findPreference(VOLUME_ROCKER_WAKE);

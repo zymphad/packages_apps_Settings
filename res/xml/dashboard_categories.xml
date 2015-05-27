@@ -233,12 +233,12 @@
                 android:icon="@drawable/ic_settings_development"
                 />
 
-        <!-- Rastapop -->
+        <!-- Icarus -->
         <dashboard-tile
-                android:id="@+id/rastapop_settings"
-                android:title="@string/rastapop_settings_title"
-                android:fragment="com.android.settings.rastapop.RastapopSettings"
-                android:icon="@drawable/ic_settings_rastapop"
+                android:id="@+id/icarus_settings"
+                android:title="@string/icarus_settings_title"
+                android:fragment="com.android.settings.icarus.Settings"
+                android:icon="@drawable/ic_settings_icarus"
                 />
 
         <!-- About Device -->

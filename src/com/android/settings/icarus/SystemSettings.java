@@ -1,5 +1,5 @@
 
-package com.android.settings.rastapop;
+package com.android.settings.icarus;
 
 import android.os.Bundle;
 import android.preference.Preference;
@@ -27,7 +27,7 @@ public class SystemSettings extends SettingsPreferenceFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.ras_system_settings);
+        addPreferencesFromResource(R.xml.icarus_system_settings);
 
         // advanced reboot
         mAdvancedReboot = (SwitchPreference) findPreference(ADVANCED_REBOOT);
