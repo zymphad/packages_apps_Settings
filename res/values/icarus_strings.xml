@@ -7,7 +7,7 @@
     <string name="build_date_default">2014-01-01-0000</string>
 
     <!-- BUILD TWEAKS -->
-    <string name="icarus_settings_title">Extras</string>
+    <string name="icarus_settings_title">Icarus</string>
     <string name="keywords_icarus">Icarus Advanced extras</string>
 
     <!-- Status bar -->
