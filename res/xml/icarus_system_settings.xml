@@ -5,11 +5,6 @@
     android:title="@string/system_settings_screen_title" >
 
     <SwitchPreference
-        android:key="advanced_reboot"
-        android:summary="@string/advanced_reboot_summary"
-        android:title="@string/advanced_reboot_title" />
-
-    <SwitchPreference
         android:key="kill_app_longpress_back"
         android:summary="@string/kill_app_longpress_back_summary"
         android:title="@string/kill_app_longpress_back" />
