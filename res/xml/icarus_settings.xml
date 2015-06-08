@@ -19,9 +19,4 @@
         android:key="volume_rocker_general_category"
         android:title="@string/volume_rocker_screen_title" />
 
-    <PreferenceScreen
-        android:fragment="com.android.settings.icarus.SystemSettings"
-        android:key="system_settings_general_category"
-        android:title="@string/system_settings_screen_title" />
-
 </PreferenceScreen>
