@@ -18,8 +18,6 @@ public class VolumeRockerSettings extends SettingsPreferenceFragment implements
     private static final String VOLUME_ROCKER_WAKE = "volume_rocker_wake";
     // volume rocker music control
     public static final String VOLUME_ROCKER_MUSIC_CONTROLS = "volume_rocker_music_controls";
-    // volume key adjust sound
-    private static final String VOLUME_KEY_ADJUST_SOUND = "volume_key_adjust_sound";
     // volume key cursor control
     private static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
 
@@ -27,8 +25,6 @@ public class VolumeRockerSettings extends SettingsPreferenceFragment implements
     private SwitchPreference mVolumeRockerWake;
     // volume rocker music control
     private SwitchPreference mVolumeRockerMusicControl;
-    // volume key adjust sound
-    private SwitchPreference mVolumeKeyAdjustSound;
     // volume key cursor control
     private ListPreference mVolumeKeyCursorControl;
 
@@ -51,12 +47,6 @@ public class VolumeRockerSettings extends SettingsPreferenceFragment implements
         int volumeRockerMusicControl = Settings.System.getInt(getContentResolver(),
                 VOLUME_ROCKER_MUSIC_CONTROLS, 0);
         mVolumeRockerMusicControl.setChecked(volumeRockerMusicControl != 0);
-
-        // volume key adjust sound
-        mVolumeKeyAdjustSound = (SwitchPreference) findPreference(VOLUME_KEY_ADJUST_SOUND);
-        mVolumeKeyAdjustSound.setOnPreferenceChangeListener(this);
-        mVolumeKeyAdjustSound.setChecked(Settings.System.getInt(getContentResolver(),
-                VOLUME_KEY_ADJUST_SOUND, 1) != 0);
 
         // volume key cursor control
         mVolumeKeyCursorControl = (ListPreference) findPreference(VOLUME_KEY_CURSOR_CONTROL);
@@ -84,14 +74,6 @@ public class VolumeRockerSettings extends SettingsPreferenceFragment implements
         else if (preference == mVolumeRockerMusicControl) {
             boolean value = (Boolean) objValue;
             Settings.System.putInt(getContentResolver(), VOLUME_ROCKER_MUSIC_CONTROLS,
-                    value ? 1 : 0);
-            return true;
-        }
-
-        // volume key adjust sound
-        else if (preference == mVolumeKeyAdjustSound) {
-            boolean value = (Boolean) objValue;
-            Settings.System.putInt(getContentResolver(), VOLUME_KEY_ADJUST_SOUND,
                     value ? 1 : 0);
             return true;
         }

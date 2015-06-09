@@ -14,11 +14,6 @@
         android:summary="@string/volume_rocker_music_controls_summary"
         android:title="@string/volume_rocker_music_controls_title" />
 
-    <SwitchPreference
-        android:key="volume_key_adjust_sound"
-        android:summary="@string/volume_key_adjust_sound_summary"
-        android:title="@string/volume_key_adjust_sound_title" />
-
     <ListPreference
         android:dialogTitle="@string/volume_key_cursor_control_title"
         android:entries="@array/volume_key_cursor_control_entries"
