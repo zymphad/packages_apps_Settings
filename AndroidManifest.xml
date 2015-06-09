@@ -1989,6 +1989,10 @@
                 android:value="true" />
         </activity>
 
+        <!-- System Bars Activity -->
+        <activity android:name=".icarus.SystemBarsSettings" />
+        <!-- BUILD TWEAKS END -->
+        
         <!-- BUILD TWEAKS START -->
         <activity android:name=".icarus.Settings" />
         <!-- BUILD TWEAKS END -->

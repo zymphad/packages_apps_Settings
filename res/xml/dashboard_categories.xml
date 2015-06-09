@@ -123,6 +123,14 @@
                 android:fragment="com.android.settings.notification.NotificationSettings"
                 android:icon="@drawable/ic_settings_notifications"
                 />
+                
+        <!-- System Bars -->
+        <dashboard-tile
+                android:id="@+id/system_bars_settings"
+                android:title="@string/system_bars_settings_title"
+                android:fragment="com.android.settings.icarus.SystemBarsSettings"
+                android:icon="@drawable/ic_settings_system_bars"
+                />                  
 
         <!-- Storage -->
         <dashboard-tile
@@ -231,7 +239,7 @@
                 android:title="@string/date_and_time_settings_title"
                 android:fragment="com.android.settings.DateTimeSettings"
                 android:icon="@drawable/ic_settings_date_time"
-                />
+                />              
 
         <!-- Accessibility feedback -->
         <dashboard-tile

@@ -6,6 +6,10 @@
     <string name="build_date">Icarus build date</string>
     <string name="build_date_default">2014-01-01-0000</string>
 
+    <!-- System Bars Dashboard category -->
+    <string name="system_bars_settings_title">System bars</string>
+    <string name="keywords_system_bars">statusbar navigationbar</string>
+
     <!-- BUILD TWEAKS -->
     <string name="icarus_settings_title">Icarus</string>
     <string name="keywords_icarus">Icarus Advanced extras</string>
