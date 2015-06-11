@@ -5,15 +5,51 @@
     android:title="@string/system_bars_settings_title"
     settings:keywords="@string/keywords_system_bars" >
 
-    <PreferenceScreen
-        android:fragment="com.android.settings.icarus.StatusBarSettings"
-        android:key="status_bar_general_category"
-        android:title="@string/status_bar_screen_title" />
+    <PreferenceCategory
+        android:key="statusbar"
+        android:title="@string/statusbar_section_header" >
 
-    <PreferenceScreen
-        android:fragment="com.android.settings.icarus.NavigationBarSettings"
-        android:key="navigation_bar_general_category"
-        android:title="@string/navigation_bar_screen_title" />
+        <!-- Brightness control -->
+        <SwitchPreference
+            android:key="status_bar_brightness_control"
+            android:summary="@string/status_bar_brightness_control_summary"
+            android:title="@string/status_bar_brightness_control_title" />
+
+        <!-- Battery percentage -->
+        <ListPreference
+            android:key="status_bar_show_battery_percent"
+            android:title="@string/status_bar_battery_percentage_title"
+            android:dialogTitle="@string/status_bar_battery_percentage_dialog_title"
+            android:entries="@array/status_bar_battery_percentage_entries"
+            android:entryValues="@array/status_bar_battery_percentage_values" />
+
+        <!-- Power menu in expanded notification header bar -->
+        <ListPreference
+            android:defaultValue="0"
+            android:dialogTitle="@string/status_bar_power_menu_dialog_title"
+            android:entries="@array/status_bar_power_menu_entries"
+            android:entryValues="@array/status_bar_power_menu_values"
+            android:key="status_bar_power_menu"
+            android:persistent="false"
+            android:title="@string/status_bar_power_menu_title" />
+            
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="navigationbar"
+        android:title="@string/navigationbar_section_header" >
+
+        <!-- Navigation bar height -->
+        <ListPreference
+            android:defaultValue="48"
+            android:dialogTitle="@string/navigation_bar_height"
+            android:entries="@array/navigation_bar_height_entries"
+            android:entryValues="@array/navigation_bar_height_values"
+            android:key="navigation_bar_height"
+            android:persistent="false"
+            android:title="@string/navigation_bar_height" />
+            
+    </PreferenceCategory>                        
 
 </PreferenceScreen>
 

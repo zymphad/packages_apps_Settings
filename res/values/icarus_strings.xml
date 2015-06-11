@@ -9,13 +9,13 @@
     <!-- System Bars Dashboard category -->
     <string name="system_bars_settings_title">System bars</string>
     <string name="keywords_system_bars">statusbar navigationbar</string>
+    <string name="statusbar_section_header">Status bar</string>
+    <string name="navigationbar_section_header">Navigation bar</string>
 
     <!-- BUILD TWEAKS -->
     <string name="icarus_settings_title">Icarus</string>
     <string name="keywords_icarus">Icarus Advanced extras</string>
 
-    <!-- Status bar -->
-    <string name="status_bar_screen_title">Status bar</string>
     <!-- Statusbar show battery percent -->
     <string name="status_bar_battery_percentage_title">Show battery percentage</string>
     <string name="status_bar_battery_percentage_dialog_title">Battery percentage</string>
@@ -52,8 +52,6 @@
     <string name="kill_app_longpress_back">Kill app back button</string>
     <string name="kill_app_longpress_back_summary">Kill the foreground app by long-pressing the back key</string>
 
-    <!-- Navigation Bar -->
-    <string name="navigation_bar_screen_title">Navigation bar</string>
     <!-- Navigation Bar Height -->
     <string name="navigation_bar_height">Navigation bar height</string>
     <string name="navigation_bar_height_48">48dp (default)</string>
