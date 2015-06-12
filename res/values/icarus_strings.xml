@@ -12,10 +12,6 @@
     <string name="statusbar_section_header">Status bar</string>
     <string name="navigationbar_section_header">Navigation bar</string>
 
-    <!-- BUILD TWEAKS -->
-    <string name="icarus_settings_title">Icarus</string>
-    <string name="keywords_icarus">Icarus Advanced extras</string>
-
     <!-- Statusbar show battery percent -->
     <string name="status_bar_battery_percentage_title">Show battery percentage</string>
     <string name="status_bar_battery_percentage_dialog_title">Battery percentage</string>
@@ -32,14 +28,17 @@
     <string name="status_bar_power_menu_action_screen_off">Screen off - Power menu</string>
     <string name="status_bar_power_menu_action_dialog">Power menu - Screen off</string>
 
-    <!--  Volume rocker -->
-    <string name="volume_rocker_screen_title">Volume rocker</string>
+    <!-- Wakeup section under Display settings -->
+    <string name="wakeup_section_header">Wake up</string>
     <!-- Volume rocker wake -->
     <string name="volume_rocker_wake_title">Volume rocker wake</string>
     <string name="volume_rocker_wake_summary">Pressing the volume keys will wake your device</string>
     <!-- Volume rocker music control -->
     <string name="volume_rocker_music_controls_title">Playback control</string>
     <string name="volume_rocker_music_controls_summary">When the screen is off, long-pressing the volume keys will seek music tracks</string>
+    <string name="volume_rocker_toggle_info">Volume rocker wake must be disabled</string>    
+    <!-- Cursor header under Language & input -->
+    <string name="cursor_section_header">Cursor</string>
     <!--- Volume key cursor control -->
     <string name="volume_key_cursor_control_title">Volume key cursor control</string>
     <string name="volume_key_cursor_control_off">Disabled</string>

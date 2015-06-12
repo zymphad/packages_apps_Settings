@@ -46,6 +46,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
 
 import com.android.internal.widget.LockPatternUtils;
@@ -73,6 +74,8 @@ public class NotificationSettings extends SettingsPreferenceFragment implements 
     private static final String KEY_PHONE_RINGTONE = "ringtone";
     private static final String KEY_NOTIFICATION_RINGTONE = "notification_ringtone";
     private static final String KEY_VIBRATE_WHEN_RINGING = "vibrate_when_ringing";
+    // volume rocker music control
+    public static final String VOLUME_ROCKER_MUSIC_CONTROLS = "volume_rocker_music_controls";
     private static final String KEY_NOTIFICATION = "notification";
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_CHARGING_LED = "charging_led";
@@ -97,6 +100,8 @@ public class NotificationSettings extends SettingsPreferenceFragment implements 
     private Preference mPhoneRingtonePreference;
     private Preference mNotificationRingtonePreference;
     private TwoStatePreference mVibrateWhenRinging;
+    // volume rocker music control
+    private TwoStatePreference mVolumeRockerMusicControl;    
     private TwoStatePreference mNotificationPulse;
     private TwoStatePreference mChargingLed;
     private DropDownPreference mLockscreen;
@@ -140,6 +145,7 @@ public class NotificationSettings extends SettingsPreferenceFragment implements 
         }
         initRingtones(sound);
         initVibrateWhenRinging(sound);
+        initVolumeRockerMusicControl(sound);
 
         final PreferenceCategory notification = (PreferenceCategory)
                 findPreference(KEY_NOTIFICATION);
@@ -366,6 +372,45 @@ public class NotificationSettings extends SettingsPreferenceFragment implements 
         mVibrateWhenRinging.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.VIBRATE_WHEN_RINGING, 0) != 0);
     }
+    
+    // === Volume key music controls ===
+
+    private void initVolumeRockerMusicControl(PreferenceCategory root) {
+        mVolumeRockerMusicControl = (TwoStatePreference) root.findPreference(VOLUME_ROCKER_MUSIC_CONTROLS);
+        if (mVolumeRockerMusicControl == null) {
+            Log.i(TAG, "Preference not found: " + KEY_VIBRATE_WHEN_RINGING);
+            return;
+        }
+        try {
+        //Check if volume rocker wake is enable, and disable this option
+            if (Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.VOLUME_ROCKER_WAKE) != 1) {
+                        mVolumeRockerMusicControl.setPersistent(false);
+                        updateVolumeRockerMusicControl();
+                        mVolumeRockerMusicControl.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                            @Override
+                            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                                final boolean val = (Boolean) newValue;
+                                return Settings.System.putInt(getContentResolver(),
+                                        Settings.System.VOLUME_ROCKER_MUSIC_CONTROLS,
+                                        val ? 1 : 0);
+                            }
+                        });
+                } else {
+                mVolumeRockerMusicControl.setEnabled(false);
+		        mVolumeRockerMusicControl.setSummary(R.string.volume_rocker_toggle_info);
+		        }
+		   } catch (Exception e) {
+                 // This will catch any exceptions
+           } 
+
+    }
+
+    private void updateVolumeRockerMusicControl() {
+        if (mVolumeRockerMusicControl == null) return;
+        mVolumeRockerMusicControl.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.VOLUME_ROCKER_MUSIC_CONTROLS, 0) != 0);
+    }    
 
     // === Pulse notification light ===
 

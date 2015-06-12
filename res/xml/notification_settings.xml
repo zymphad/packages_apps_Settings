@@ -53,6 +53,12 @@
                 android:key="vibrate_when_ringing"
                 android:title="@string/vibrate_when_ringing_title"
                 android:persistent="false" />
+        
+        <!-- Volume key music controls -->
+        <SwitchPreference
+            android:key="volume_rocker_music_controls"
+            android:summary="@string/volume_rocker_music_controls_summary"
+            android:title="@string/volume_rocker_music_controls_title" />                
 
         <!-- Interruptions -->
         <PreferenceScreen
