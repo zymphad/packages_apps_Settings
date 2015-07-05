@@ -16,6 +16,7 @@ import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.text.format.DateFormat;
+import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.android.settings.R;
@@ -23,6 +24,7 @@ import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 
 import java.util.Date;
+import java.util.Locale;
 
 public class SystemBarsSettings extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener {
@@ -42,6 +44,11 @@ public class SystemBarsSettings extends SettingsPreferenceFragment implements
     public static final int CLOCK_DATE_STYLE_LOWERCASE = 1;
     public static final int CLOCK_DATE_STYLE_UPPERCASE = 2;
     private static final int CUSTOM_CLOCK_DATE_FORMAT_INDEX = 18;
+    // battery
+    private static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
+    private static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
+    private static final int STATUS_BAR_BATTERY_STYLE_HIDDEN = 4;
+    private static final int STATUS_BAR_BATTERY_STYLE_TEXT = 6;    
     
     // navigation bar height
     private static final String NAVIGATION_BAR_HEIGHT = "navigation_bar_height";
@@ -55,6 +62,9 @@ public class SystemBarsSettings extends SettingsPreferenceFragment implements
     private ListPreference mClockDateStyle;
     private ListPreference mClockDateFormat;
     private SwitchPreference mStatusBarClock;
+    // battery
+    private ListPreference mStatusBarBattery;
+    private ListPreference mStatusBarBatteryShowPercent;
     
     // navigation bar height
     private ListPreference mNavigationBarHeight;    
@@ -127,6 +137,22 @@ public class SystemBarsSettings extends SettingsPreferenceFragment implements
             mClockDateStyle.setEnabled(false);
             mClockDateFormat.setEnabled(false);
         }
+
+        // battery options
+ 	    mStatusBarBattery = (ListPreference) findPreference(STATUS_BAR_BATTERY_STYLE);
+        mStatusBarBatteryShowPercent =
+                (ListPreference) findPreference(STATUS_BAR_SHOW_BATTERY_PERCENT);
+
+        int batteryStyle = Settings.System.getInt(getActivity().getContentResolver(), Settings.System.STATUS_BAR_BATTERY_STYLE, 0);
+        mStatusBarBattery.setValue(String.valueOf(batteryStyle));
+        mStatusBarBattery.setSummary(mStatusBarBattery.getEntry());
+        mStatusBarBattery.setOnPreferenceChangeListener(this);
+
+        int batteryShowPercent = Settings.System.getInt(getActivity().getContentResolver(), Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, 0);
+        mStatusBarBatteryShowPercent.setValue(String.valueOf(batteryShowPercent));
+        mStatusBarBatteryShowPercent.setSummary(mStatusBarBatteryShowPercent.getEntry());
+        mStatusBarBatteryShowPercent.setOnPreferenceChangeListener(this);
+	    enableStatusBarBatteryDependents(batteryStyle);
 
         // navigation bar height
         mNavigationBarHeight = (ListPreference) findPreference(NAVIGATION_BAR_HEIGHT);
@@ -235,10 +261,23 @@ public class SystemBarsSettings extends SettingsPreferenceFragment implements
                 }
             }
             return true;
-        }
-        
+        } else if (preference == mStatusBarBattery) {
+            int batteryStyle = Integer.valueOf((String) objValue);
+            int index = mStatusBarBattery.findIndexOfValue((String) objValue);
+            Settings.System.putInt(
+                    getActivity().getContentResolver(), Settings.System.STATUS_BAR_BATTERY_STYLE, batteryStyle);
+            mStatusBarBattery.setSummary(mStatusBarBattery.getEntries()[index]);
+            enableStatusBarBatteryDependents(batteryStyle);
+            return true;
+        } else if (preference == mStatusBarBatteryShowPercent) {
+            int batteryShowPercent = Integer.valueOf((String) objValue);
+            int index = mStatusBarBatteryShowPercent.findIndexOfValue((String) objValue);
+            Settings.System.putInt(
+                    getActivity().getContentResolver(), Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, batteryShowPercent);
+            mStatusBarBatteryShowPercent.setSummary(mStatusBarBatteryShowPercent.getEntries()[index]);
+            return true;
         // navigation bar height
-        if (preference == mNavigationBarHeight) {
+        } else if (preference == mNavigationBarHeight) {
             int statusNavigationBarHeight = Integer.valueOf((String) objValue);
             int index = mNavigationBarHeight.findIndexOfValue((String) objValue);
             Settings.System.putInt(getContentResolver(), NAVIGATION_BAR_HEIGHT,
@@ -278,4 +317,13 @@ public class SystemBarsSettings extends SettingsPreferenceFragment implements
         }
         mClockDateFormat.setEntries(parsedDateEntries);
     }
+    
+    private void enableStatusBarBatteryDependents(int batteryIconStyle) {
+        if (batteryIconStyle == STATUS_BAR_BATTERY_STYLE_HIDDEN || 
+		batteryIconStyle == STATUS_BAR_BATTERY_STYLE_TEXT) {
+            mStatusBarBatteryShowPercent.setEnabled(false);
+        } else {
+            mStatusBarBatteryShowPercent.setEnabled(true);
+        }
+    }    
 }
