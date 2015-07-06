@@ -46,9 +46,11 @@ public class SystemBarsSettings extends SettingsPreferenceFragment implements
     private static final int CUSTOM_CLOCK_DATE_FORMAT_INDEX = 18;
     // battery
     private static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
+    private static final String STATUS_BAR_SHOW_BATTERY_PERCENT_LOW_ONLY = "status_bar_show_battery_percent_low_only";
     private static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
     private static final int STATUS_BAR_BATTERY_STYLE_HIDDEN = 4;
     private static final int STATUS_BAR_BATTERY_STYLE_TEXT = 6;    
+    private static final int STATUS_BAR_SHOW_BATTERY_PERCENT_INSIDE = 1;
     
     // navigation bar height
     private static final String NAVIGATION_BAR_HEIGHT = "navigation_bar_height";
@@ -65,16 +67,19 @@ public class SystemBarsSettings extends SettingsPreferenceFragment implements
     // battery
     private ListPreference mStatusBarBattery;
     private ListPreference mStatusBarBatteryShowPercent;
+    private SwitchPreference mStatusBarBatteryShowPercentLowOnly;
     
     // navigation bar height
-    private ListPreference mNavigationBarHeight;    
+    private ListPreference mNavigationBarHeight;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.icarus_system_bars_settings);
-
+        
+        int lowBatteryWarningLevel = getResources().getInteger(com.android.internal.R.integer.config_lowBatteryWarningLevel);
+        
         // status bar brightness control
         mStatusBarBrightnessControl = (SwitchPreference) findPreference(STATUS_BAR_BRIGHTNESS_CONTROL);
         mStatusBarBrightnessControl.setOnPreferenceChangeListener(this);
@@ -141,19 +146,27 @@ public class SystemBarsSettings extends SettingsPreferenceFragment implements
         // battery options
  	    mStatusBarBattery = (ListPreference) findPreference(STATUS_BAR_BATTERY_STYLE);
         mStatusBarBatteryShowPercent =
-                (ListPreference) findPreference(STATUS_BAR_SHOW_BATTERY_PERCENT);
+                (ListPreference) findPreference(STATUS_BAR_SHOW_BATTERY_PERCENT);       
+        mStatusBarBatteryShowPercentLowOnly =
+                (SwitchPreference) findPreference(STATUS_BAR_SHOW_BATTERY_PERCENT_LOW_ONLY);                         
 
         int batteryStyle = Settings.System.getInt(getActivity().getContentResolver(), Settings.System.STATUS_BAR_BATTERY_STYLE, 0);
         mStatusBarBattery.setValue(String.valueOf(batteryStyle));
         mStatusBarBattery.setSummary(mStatusBarBattery.getEntry());
         mStatusBarBattery.setOnPreferenceChangeListener(this);
 
-        int batteryShowPercent = Settings.System.getInt(getActivity().getContentResolver(), Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, 0);
+        int batteryShowPercent = Settings.System.getInt(getActivity().getContentResolver(), Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, 0); 
         mStatusBarBatteryShowPercent.setValue(String.valueOf(batteryShowPercent));
         mStatusBarBatteryShowPercent.setSummary(mStatusBarBatteryShowPercent.getEntry());
         mStatusBarBatteryShowPercent.setOnPreferenceChangeListener(this);
 	    enableStatusBarBatteryDependents(batteryStyle);
-
+	    
+        int batteryShowPercentLowOnly = Settings.System.getInt(getActivity().getContentResolver(), Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT_LOW_ONLY, 0);
+        mStatusBarBatteryShowPercentLowOnly.setChecked(batteryShowPercentLowOnly == 1);
+        mStatusBarBatteryShowPercentLowOnly.setOnPreferenceChangeListener(this);    
+        String showPercentLowOnlySummary = String.format(getResources().getString(R.string.status_bar_battery_percentage_low_only_summary), lowBatteryWarningLevel);
+        mStatusBarBatteryShowPercentLowOnly.setSummary(showPercentLowOnlySummary);
+    
         // navigation bar height
         mNavigationBarHeight = (ListPreference) findPreference(NAVIGATION_BAR_HEIGHT);
         mNavigationBarHeight.setOnPreferenceChangeListener(this);
@@ -275,7 +288,13 @@ public class SystemBarsSettings extends SettingsPreferenceFragment implements
             Settings.System.putInt(
                     getActivity().getContentResolver(), Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, batteryShowPercent);
             mStatusBarBatteryShowPercent.setSummary(mStatusBarBatteryShowPercent.getEntries()[index]);
+            enableStatusBarBatteryDependents(batteryShowPercent);
             return true;
+        } else if (preference == mStatusBarBatteryShowPercentLowOnly) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT_LOW_ONLY,
+                    (Boolean) objValue ? 1 : 0);
+            return true;           
         // navigation bar height
         } else if (preference == mNavigationBarHeight) {
             int statusNavigationBarHeight = Integer.valueOf((String) objValue);
@@ -322,8 +341,13 @@ public class SystemBarsSettings extends SettingsPreferenceFragment implements
         if (batteryIconStyle == STATUS_BAR_BATTERY_STYLE_HIDDEN || 
 		batteryIconStyle == STATUS_BAR_BATTERY_STYLE_TEXT) {
             mStatusBarBatteryShowPercent.setEnabled(false);
+            mStatusBarBatteryShowPercentLowOnly.setEnabled(false);
+        } else if ((Settings.System.getInt(getActivity().getContentResolver(), Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, 0)) != STATUS_BAR_SHOW_BATTERY_PERCENT_INSIDE) {
+            mStatusBarBatteryShowPercent.setEnabled(true);        
+            mStatusBarBatteryShowPercentLowOnly.setEnabled(false);
         } else {
             mStatusBarBatteryShowPercent.setEnabled(true);
+            mStatusBarBatteryShowPercentLowOnly.setEnabled(true);
         }
     }    
 }
