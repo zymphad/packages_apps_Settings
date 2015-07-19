@@ -78,7 +78,7 @@ public class SystemBarsSettings extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.icarus_system_bars_settings);
         
-        int lowBatteryWarningLevel = getResources().getInteger(com.android.internal.R.integer.config_lowBatteryWarningLevel);
+        int lowBatteryWarningLevel = getResources().getInteger(com.android.internal.R.integer.config_batteryPercentLowOnlyLevel);
         
         // status bar brightness control
         mStatusBarBrightnessControl = (SwitchPreference) findPreference(STATUS_BAR_BRIGHTNESS_CONTROL);
