@@ -38,4 +38,6 @@
     <color name="ownerinfo_divider_color">#ff404040</color>
     <!-- Installed app details -->
     <color name="security_settings_billing_desc_color">#ffffb060</color>
+    <!-- Dashboard icons color -->
+    <color name="dashboard_icons_color">@color/ic_settings_icons_exposed</color>
 </resources> 
