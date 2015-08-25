@@ -66,10 +66,4 @@ public class SystemSettingSwitchPreference extends SwitchPreference {
         // instead of catching an exception. (All values are stored as strings.)
         return Settings.System.getString(getContext().getContentResolver(), getKey()) != null;
     }
-
-    @Override
-    protected void onClick() {
-        // Do nothing
-        //super.onClick();
-    }
 }
