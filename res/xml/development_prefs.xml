@@ -73,6 +73,11 @@
         android:summary="@string/color_temperature_desc"
         android:persistent="false" />
 
+    <SwitchPreference
+        android:key="tuner_ui"
+        android:persistent="false"
+        android:title="@string/system_ui_settings" />
+
     <PreferenceCategory android:key="debug_debugging_category"
             android:title="@string/debug_debugging_category">
 
