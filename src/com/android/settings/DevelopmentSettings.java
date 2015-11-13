@@ -102,6 +102,11 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
      */
     public static final String PREF_SHOW = "show";
 
+    /**
+     * Whether to show the Layers Manager dashboard item to the user (if already installed).  Default is true.
+     */
+    public static final String PREF_LAYERS = "bitsyko_layers_dashboard";
+
     private static final String ENABLE_ADB = "enable_adb";
     private static final String CLEAR_ADB_KEYS = "clear_adb_keys";
     private static final String ENABLE_TERMINAL = "enable_terminal";
@@ -255,6 +260,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
 
     private SwitchPreference mShowAllANRs;
     private SwitchPreference mKillAppLongpressBack;
+    private SwitchPreference mShowLayers;
 
     private final ArrayList<Preference> mAllPrefs = new ArrayList<Preference>();
 
@@ -406,6 +412,8 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
 
         mKillAppLongpressBack = findAndInitSwitchPref(KILL_APP_LONGPRESS_BACK);
 
+        mShowLayers = findAndInitSwitchPref(PREF_LAYERS);
+
         Preference hdcpChecking = findPreference(HDCP_CHECKING_KEY);
         if (hdcpChecking != null) {
             mAllPrefs.add(hdcpChecking);
@@ -504,6 +512,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         mSwitchBar.setChecked(mLastEnabledState);
         setPrefsEnabledState(mLastEnabledState);
         updateKillAppLongpressBackOptions();
+        updateShowLayersOptions();
 
         if (mHaveDebugSettings && !mLastEnabledState) {
             // Overall debugging is disabled, but there are some debug
@@ -671,6 +680,17 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
     private void updateKillAppLongpressBackOptions() {
         mKillAppLongpressBack.setChecked(Settings.Secure.getInt(
             getActivity().getContentResolver(), Settings.Secure.KILL_APP_LONGPRESS_BACK, 0) != 0);
+    }
+
+    private void writeShowLayersOptions() {
+        getActivity().getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE).edit()
+           .putBoolean(PREF_LAYERS, mShowLayers.isChecked())
+           .apply();
+    }
+
+    private void updateShowLayersOptions() {
+        mShowLayers.setChecked(getActivity().getSharedPreferences(PREF_FILE,
+                            Context.MODE_PRIVATE).getBoolean(PREF_LAYERS, true));
     }
 
     private void updatePasswordSummary() {
@@ -1680,6 +1700,8 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
             startInactiveAppsFragment();
         } else if (preference == mKillAppLongpressBack) {
             writeKillAppLongpressBackOptions();
+        } else if (preference == mShowLayers) {
+            writeShowLayersOptions();
         } else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
